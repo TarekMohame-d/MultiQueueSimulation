@@ -18,8 +18,8 @@ namespace MultiQueueSimulation
         {
             int x = 0;
             SimulationSystem system = new SimulationSystem();
-            //string result = TestingManager.Test(system, Constants.FileNames.TestCase1);
-            //MessageBox.Show(result);
+            string result = TestingManager.Test(system, Constants.FileNames.TestCase1);
+            MessageBox.Show(result);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ExtractAndShowDataForm());
