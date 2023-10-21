@@ -141,7 +141,7 @@ namespace MultiQueueModels
                 rawData.interarrivalTime.AddRange(interarrivalTime);
                 rawData.interarrivalProbability.AddRange(interarrivalProbability);
             }
-            else if (lineIndex >= 6)
+            else if (lineIndex >= 6) // server data
             {
                 List<double> serverTime = new List<double>();
                 List<double> serverProbability = new List<double>();
