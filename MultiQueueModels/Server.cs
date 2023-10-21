@@ -23,5 +23,16 @@ namespace MultiQueueModels
         //optional if needed use them
         public int FinishTime { get; set; }
         public int TotalWorkingTime { get; set; }
+
+        public Server(int iD, decimal idleProbability, decimal averageServiceTime, decimal utilization, List<TimeDistribution> timeDistribution, int finishTime, int totalWorkingTime)
+        {
+            ID = iD;
+            IdleProbability = idleProbability;
+            AverageServiceTime = averageServiceTime;
+            Utilization = utilization;
+            TimeDistribution = timeDistribution;
+            FinishTime = finishTime;
+            TotalWorkingTime = totalWorkingTime;
+        }
     }
 }

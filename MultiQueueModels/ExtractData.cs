@@ -4,15 +4,32 @@ using System.Collections.Generic;
 
 namespace MultiQueueModels
 {
-
+    public class RawData
+    {
+        public int numberOfServers;
+        public int stoppingNumber;
+        public string stoppingCriteria;
+        public string selectionMethod;
+        public List<double> interarrivalTime = new List<double>();
+        public List<double> interarrivalProbability = new List<double>();
+        public List<ServiceDistribution> serviceDistributions = new List<ServiceDistribution>();
+    }
+    public class ServiceDistribution
+    {
+        public List<double> serverTime = new List<double>();
+        public List<double> serverProbability = new List<double>();
+    }
     public class ExtraxtData
     {
         public static string filePath;
         public static int lineIndex = 0;
-        public static Dictionary<string, List<double>> data = new Dictionary<string, List<double>>();
+        public static RawData rawData = new RawData();
+        public static ServiceDistribution temp = new ServiceDistribution();
         public static void extractFileData()
         {
-            data.Clear();
+            rawData = new RawData();
+            temp = new ServiceDistribution();
+            lineIndex = 0;
             string currentKey = "";
 
             foreach (string line in File.ReadLines(filePath))
@@ -40,32 +57,57 @@ namespace MultiQueueModels
                         {
                             case "NumberOfServers":
                                 {
-                                    dictionaryHelper(data, "NumberOfServers", numbers);
+                                    rawData.numberOfServers = (int)numbers[0];
+                                    for (int i = 0; i < rawData.numberOfServers; i++)
+                                    {
+                                        ServiceDistribution serviceDistribution = new ServiceDistribution();
+                                        rawData.serviceDistributions.Add(serviceDistribution);
+                                    }
                                 }
                                 break;
                             case "StoppingNumber":
                                 {
-                                    dictionaryHelper(data, "StoppingNumber", numbers);
+                                    rawData.stoppingNumber = (int)numbers[0];
                                 }
                                 break;
                             case "StoppingCriteria":
                                 {
-                                    dictionaryHelper(data, "StoppingCriteria", numbers);
+                                    if (numbers[0] == 1)
+                                    {
+                                        rawData.stoppingCriteria = Enums.StoppingCriteria.NumberOfCustomers.ToString();
+                                    }
+                                    else
+                                    {
+                                        rawData.stoppingCriteria = Enums.StoppingCriteria.SimulationEndTime.ToString();
+                                    }
                                 }
                                 break;
                             case "SelectionMethod":
                                 {
-                                    dictionaryHelper(data, "SelectionMethod", numbers);
+                                    if (numbers[0] == 1)
+                                    {
+                                        rawData.selectionMethod = Enums.SelectionMethod.HighestPriority.ToString();
+                                    }
+                                    else if (numbers[0] == 2)
+                                    {
+                                        rawData.selectionMethod = Enums.SelectionMethod.Random.ToString();
+                                    }
+                                    else
+                                    {
+                                        rawData.selectionMethod = Enums.SelectionMethod.LeastUtilization.ToString();
+                                    }
                                 }
                                 break;
                             case "InterarrivalDistribution":
                                 {
-                                    dictionaryHelper(data, "InterarrivalDistribution", numbers);
+                                    dictionaryHelper(numbers, key: "InterarrivalDistribution");
                                 }
                                 break;
                             default:
                                 {
-                                    dictionaryHelper(data, currentKey, numbers, lineIndex);
+                                    dictionaryHelper(numbers, lineIndex: lineIndex);
+                                    rawData.serviceDistributions[lineIndex - 6].serverTime.AddRange(temp.serverTime);
+                                    rawData.serviceDistributions[lineIndex - 6].serverProbability.AddRange(temp.serverProbability);
                                 }
                                 break;
                         }
@@ -79,14 +121,12 @@ namespace MultiQueueModels
             }
         }
 
-        static void dictionaryHelper(Dictionary<string, List<double>> data, string key, List<double> numbers, int lineIndex = -1)
+        static void dictionaryHelper(List<double> numbers, string key = "", int lineIndex = -1)
         {
             if (key == "InterarrivalDistribution")
             {
                 List<double> interarrivalTime = new List<double>();
                 List<double> interarrivalProbability = new List<double>();
-                string column1Name = "Interarrival_Time";
-                string column2Name = "Interarrival_Probability";
                 for (int i = 0; i < numbers.Count; i++)
                 {
                     if (i % 2 == 0)
@@ -98,24 +138,13 @@ namespace MultiQueueModels
                         interarrivalProbability.Add(numbers[i]);
                     }
                 }
-                if (data.ContainsKey(column1Name) || data.ContainsKey(column2Name))
-                {
-                    data[column1Name].AddRange(interarrivalTime);
-                    data[column2Name].AddRange(interarrivalProbability);
-                }
-                else
-                {
-                    data[column1Name] = interarrivalTime;
-                    data[column2Name] = interarrivalProbability;
-                }
+                rawData.interarrivalTime.AddRange(interarrivalTime);
+                rawData.interarrivalProbability.AddRange(interarrivalProbability);
             }
             else if (lineIndex >= 6)
             {
-                string columnName = key.Substring(key.IndexOf('_') + 1);
                 List<double> serverTime = new List<double>();
-                List<double> ServerProbability = new List<double>();
-                string column1Name = columnName + "_Time";
-                string column2Name = columnName + "_Probability";
+                List<double> serverProbability = new List<double>();
                 for (int i = 0; i < numbers.Count; i++)
                 {
                     if (i % 2 == 0)
@@ -124,30 +153,11 @@ namespace MultiQueueModels
                     }
                     else
                     {
-                        ServerProbability.Add(numbers[i]);
+                        serverProbability.Add(numbers[i]);
                     }
                 }
-                if (data.ContainsKey(column1Name) || data.ContainsKey(column2Name))
-                {
-                    data[column1Name].AddRange(serverTime);
-                    data[column2Name].AddRange(ServerProbability);
-                }
-                else
-                {
-                    data[column1Name] = serverTime;
-                    data[column2Name] = ServerProbability;
-                }
-            }
-            else
-            {
-                if (data.ContainsKey(key))
-                {
-                    data[key].AddRange(numbers);
-                }
-                else
-                {
-                    data[key] = numbers;
-                }
+                temp.serverTime = serverTime;
+                temp.serverProbability = serverProbability;
             }
         }
     }

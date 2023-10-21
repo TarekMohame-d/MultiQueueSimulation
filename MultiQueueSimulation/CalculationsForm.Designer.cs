@@ -30,7 +30,7 @@
         {
             this.SuspendLayout();
             // 
-            // CalculationForm
+            // CalculationsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -41,6 +41,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculations";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalculationForm_FormClosing);
+            this.Load += new System.EventHandler(this.CalculationsForm_Load);
             this.ResumeLayout(false);
 
         }

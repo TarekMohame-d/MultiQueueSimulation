@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiQueueModels;
-using MultiQueueTesting;
-using static MultiQueueModels.Enums;
 
 namespace MultiQueueSimulation
 {
@@ -24,9 +15,13 @@ namespace MultiQueueSimulation
 
         private void importFile_button_Click(object sender, EventArgs e)
         {
-            ClearDataGridViewRows(Interarrival_dataGridView);
-            ClearDataGridViewRows(server1_dataGridView);
-            ClearDataGridViewRows(server2_dataGridView);
+            List<DataGridView> dataGridViewList = new List<DataGridView>
+            {
+                Interarrival_dataGridView,
+                server1_dataGridView,
+                server2_dataGridView
+            };
+            ClearDataGridViewRows(dataGridViewList);
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -35,54 +30,41 @@ namespace MultiQueueSimulation
                 {
                     ExtraxtData.filePath = openFileDialog.FileName;
                     ExtraxtData.extractFileData();
+                    RawData rawData = ExtraxtData.rawData;
 
-                    if (ExtraxtData.data.ContainsKey("Interarrival_Time"))
+                    for (int i = 0; i < rawData.interarrivalTime.Count; i++)
                     {
-                        for (int i = 0; i < ExtraxtData.data["Interarrival_Time"].Count; i++)
-                        {
-                            Interarrival_dataGridView.Rows.Add(ExtraxtData.data["Interarrival_Time"][i], ExtraxtData.data["Interarrival_Probability"][i]);
-                        }
+                        Interarrival_dataGridView.Rows.Add(rawData.interarrivalTime[i], rawData.interarrivalProbability[i]);
                     }
-                    if (ExtraxtData.data.ContainsKey("Server1_Time"))
+                    for (int i = 0; i < rawData.serviceDistributions.Count; i++)
                     {
-                        for (int i = 0; i < ExtraxtData.data["Server1_Time"].Count; i++)
+                        for (int j = 0; j < rawData.serviceDistributions[i].serverProbability.Count; j++)
                         {
-                            server1_dataGridView.Rows.Add(ExtraxtData.data["Server1_Time"][i], ExtraxtData.data["Server1_Probability"][i]);
-                        }
-                    }
-                    if (ExtraxtData.data.ContainsKey("Server2_Time"))
-                    {
-                        for (int i = 0; i < ExtraxtData.data["Server2_Time"].Count; i++)
-                        {
-                            server2_dataGridView.Rows.Add(ExtraxtData.data["Server2_Time"][i], ExtraxtData.data["Server2_Probability"][i]);
+
+                            if (i == 0)
+                            {
+                                server1_dataGridView.Rows.Add(rawData.serviceDistributions[i].serverTime[j], rawData.serviceDistributions[i].serverProbability[j]);
+                            }
+                            else if(i == 1)
+                            {
+                                server2_dataGridView.Rows.Add(rawData.serviceDistributions[i].serverTime[j], rawData.serviceDistributions[i].serverProbability[j]);
+                            }
                         }
                     }
 
-                    NumberOfServers_textBox.Text = ExtraxtData.data["NumberOfServers"][0].ToString();
-                    StoppingNumber_textBox.Text = ExtraxtData.data["StoppingNumber"][0].ToString();
-                    if (ExtraxtData.data["StoppingCriteria"][0] == 1)
+                    NumberOfServers_textBox.Text = rawData.numberOfServers.ToString();
+                    StoppingNumber_textBox.Text = rawData.stoppingNumber.ToString();
+                    SelectionMethod_textBox.Text = rawData.selectionMethod;
+                    StoppingCriteria_textBox.Text = rawData.stoppingCriteria;
+                    if (rawData.stoppingCriteria == "NumberOfCustomers")
                     {
-                        StoppingCriteria_textBox.Text = Enums.StoppingCriteria.NumberOfCustomers.ToString();
                         stoppingUnit_label.Text = "Units";
                         stoppingUnit_label.Visible = true;
                     }
                     else
-                    {
-                        StoppingCriteria_textBox.Text = Enums.StoppingCriteria.SimulationEndTime.ToString();
+                    {               
                         stoppingUnit_label.Text = "Unit of time";
                         stoppingUnit_label.Visible = true;
-                    }
-                    if (ExtraxtData.data["SelectionMethod"][0] == 1)
-                    {
-                        SelectionMethod_textBox.Text = Enums.SelectionMethod.HighestPriority.ToString();
-                    }
-                    else if (ExtraxtData.data["SelectionMethod"][0] == 2)
-                    {
-                        SelectionMethod_textBox.Text = Enums.SelectionMethod.Random.ToString();
-                    }
-                    else
-                    {
-                        SelectionMethod_textBox.Text = Enums.SelectionMethod.LeastUtilization.ToString();
                     }
                 }
             }
@@ -129,13 +111,15 @@ namespace MultiQueueSimulation
             Application.Exit();
         }
 
-        public static void ClearDataGridViewRows(DataGridView dataGridView)
+        public static void ClearDataGridViewRows(List<DataGridView> dataGridViewList)
         {
-            foreach (DataGridViewRow row in dataGridView.Rows)
+            foreach (DataGridView dataGridView in dataGridViewList)
             {
-                dataGridView.Rows.Clear();
+                foreach (DataGridViewRow row in dataGridView.Rows)
+                {
+                    dataGridView.Rows.Clear();
+                }
             }
-
         }
     }
 }

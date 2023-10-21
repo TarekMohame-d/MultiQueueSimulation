@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MultiQueueModels;
 
 namespace MultiQueueSimulation
 {
@@ -20,6 +21,11 @@ namespace MultiQueueSimulation
         private void CalculationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void CalculationsForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
