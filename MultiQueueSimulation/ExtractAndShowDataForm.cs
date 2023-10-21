@@ -72,6 +72,12 @@ namespace MultiQueueSimulation
 
         private void continue_button_Click(object sender, EventArgs e)
         {
+            ///////////////////////
+            CalculationsHelper c = new CalculationsHelper();
+            c.timeDistributions(0);
+            c.fillServerData();
+            //////////////////////
+
             if (SelectionMethod_textBox.Text != "" && StoppingCriteria_textBox.Text != ""
                 && StoppingNumber_textBox.Text != "" && NumberOfServers_textBox.Text != "")
             {
