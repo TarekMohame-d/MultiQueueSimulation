@@ -100,12 +100,12 @@ namespace MultiQueueModels
                                 break;
                             case "InterarrivalDistribution":
                                 {
-                                    dictionaryHelper(numbers, key: "InterarrivalDistribution");
+                                    extractDataHelper(numbers, key: "InterarrivalDistribution");
                                 }
                                 break;
                             default:
                                 {
-                                    dictionaryHelper(numbers, lineIndex: lineIndex);
+                                    extractDataHelper(numbers, lineIndex: lineIndex);
                                     rawData.serviceDistributions[lineIndex - 6].serverTime.AddRange(temp.serverTime);
                                     rawData.serviceDistributions[lineIndex - 6].serverProbability.AddRange(temp.serverProbability);
                                 }
@@ -121,7 +121,7 @@ namespace MultiQueueModels
             }
         }
 
-        static void dictionaryHelper(List<double> numbers, string key = "", int lineIndex = -1)
+        static void extractDataHelper(List<double> numbers, string key = "", int lineIndex = -1)
         {
             if (key == "InterarrivalDistribution")
             {
