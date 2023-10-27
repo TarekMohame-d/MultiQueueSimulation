@@ -122,9 +122,6 @@ namespace MultiQueueModels
         Random random = new Random();
         public Tuple<int,int> GetTime (List<TimeDistribution> timeDistributionsList)
         {
-
-
-            
             int randomNumber = random.Next(1, 101);
             for (int i = 0; i < timeDistributionsList.Count; i++)
             {

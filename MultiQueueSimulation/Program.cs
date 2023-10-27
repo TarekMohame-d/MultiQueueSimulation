@@ -16,7 +16,7 @@ namespace MultiQueueSimulation
         [STAThread]
         static void Main()
         {
-            SimulationSystem system = new SimulationSystem();
+            SimulationSystem system = CalculationsForm.oursystem;
             //string result = TestingManager.Test(system, Constants.FileNames.TestCase1);
             //MessageBox.Show(result);
             Application.EnableVisualStyles();
