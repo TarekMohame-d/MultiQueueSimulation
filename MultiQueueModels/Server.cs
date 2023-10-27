@@ -12,7 +12,7 @@ namespace MultiQueueModels
         {
             this.TimeDistribution = new List<TimeDistribution>();
         }
-
+        public int state { get; set; } //0 if idle 1 if busy
         public int ID { get; set; }
         public decimal IdleProbability { get; set; }
         public decimal AverageServiceTime { get; set; } 
@@ -23,8 +23,9 @@ namespace MultiQueueModels
         //optional if needed use them
         public int FinishTime { get; set; }
         public int TotalWorkingTime { get; set; }
+        public int numofcustomers { get; set; }
 
-        public Server(int iD, decimal idleProbability, decimal averageServiceTime, decimal utilization, List<TimeDistribution> timeDistribution, int finishTime, int totalWorkingTime)
+        public Server(int iD, decimal idleProbability, decimal averageServiceTime, decimal utilization, List<TimeDistribution> timeDistribution, int finishTime, int totalWorkingTime )
         {
             ID = iD;
             IdleProbability = idleProbability;
@@ -33,6 +34,14 @@ namespace MultiQueueModels
             TimeDistribution = timeDistribution;
             FinishTime = finishTime;
             TotalWorkingTime = totalWorkingTime;
+        }
+        public Server(int iD,  List<TimeDistribution> timeDistribution)
+        {
+            ID = iD;
+            TimeDistribution = timeDistribution;
+            state = 0;
+            TotalWorkingTime = 0;
+            numofcustomers = 0;
         }
     }
 }

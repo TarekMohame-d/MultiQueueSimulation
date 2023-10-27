@@ -4,6 +4,37 @@ using System.Collections.Generic;
 
 namespace MultiQueueModels
 {
+    public class eventstruct
+    {
+       public int type; //0 for arrival,1 for departure 
+       public int customernumber; // from 0 
+       public Server servernumber; //from 0 
+       public int time;
+       public eventstruct(int type, int customernumber, int time,Server servernumber)
+        {
+            this.type = type;
+            this.customernumber = customernumber;
+            this.time = time;
+            this.servernumber= servernumber;
+        }
+        public eventstruct(int type, int customernumber, int time)
+        {
+            this.type = type;
+            this.customernumber = customernumber;
+            this.time = time;
+            this.servernumber = new Server();
+            this.servernumber.ID = 999999999;
+            this.servernumber.TotalWorkingTime = 999999999;
+        }
+
+    }
+    public class MyClassAgeComparer : IComparer<eventstruct>
+    {
+        public int Compare(eventstruct x, eventstruct y)
+        {
+            return x.time.CompareTo(y.time);
+        }
+    }
     public class RawData
     {
         public int numberOfServers;
@@ -74,11 +105,11 @@ namespace MultiQueueModels
                                 {
                                     if (numbers[0] == 1)
                                     {
-                                        rawData.stoppingCriteria = Enums.StoppingCriteria.NumberOfCustomers.ToString();
+                                        rawData.stoppingCriteria = "1";
                                     }
                                     else
                                     {
-                                        rawData.stoppingCriteria = Enums.StoppingCriteria.SimulationEndTime.ToString();
+                                        rawData.stoppingCriteria = "2";
                                     }
                                 }
                                 break;

@@ -72,17 +72,12 @@ namespace MultiQueueSimulation
 
         private void continue_button_Click(object sender, EventArgs e)
         {
-            ///////////////////////
-            CalculationsHelper c = new CalculationsHelper();
-            c.timeDistributions(0);
-            c.fillServerData();
-            //////////////////////
-
             if (SelectionMethod_textBox.Text != "" && StoppingCriteria_textBox.Text != ""
                 && StoppingNumber_textBox.Text != "" && NumberOfServers_textBox.Text != "")
             {
-                new CalculationsForm().Show();
                 this.Hide();
+                new CalculationsForm().Show();
+
             }
             else
             {
@@ -126,6 +121,16 @@ namespace MultiQueueSimulation
                     dataGridView.Rows.Clear();
                 }
             }
+        }
+
+        private void Interarrival_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void NumberOfServers_textBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

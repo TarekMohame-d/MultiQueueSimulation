@@ -61,6 +61,7 @@
             this.NumberOfServers_textBox.Size = new System.Drawing.Size(100, 31);
             this.NumberOfServers_textBox.TabIndex = 0;
             this.NumberOfServers_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumberOfServers_textBox.TextChanged += new System.EventHandler(this.NumberOfServers_textBox_TextChanged);
             // 
             // NumberOfServers_label
             // 
@@ -88,7 +89,7 @@
             // 
             this.SelectionMethod_label.BackColor = System.Drawing.Color.White;
             this.SelectionMethod_label.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SelectionMethod_label.Location = new System.Drawing.Point(500, 110);
+            this.SelectionMethod_label.Location = new System.Drawing.Point(596, 110);
             this.SelectionMethod_label.Name = "SelectionMethod_label";
             this.SelectionMethod_label.Size = new System.Drawing.Size(220, 30);
             this.SelectionMethod_label.TabIndex = 5;
@@ -100,7 +101,7 @@
             this.SelectionMethod_textBox.Enabled = false;
             this.SelectionMethod_textBox.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SelectionMethod_textBox.ForeColor = System.Drawing.Color.Gray;
-            this.SelectionMethod_textBox.Location = new System.Drawing.Point(740, 110);
+            this.SelectionMethod_textBox.Location = new System.Drawing.Point(836, 110);
             this.SelectionMethod_textBox.Name = "SelectionMethod_textBox";
             this.SelectionMethod_textBox.Size = new System.Drawing.Size(220, 31);
             this.SelectionMethod_textBox.TabIndex = 4;
@@ -119,7 +120,7 @@
             // 
             this.StoppingCriteria_label.BackColor = System.Drawing.Color.White;
             this.StoppingCriteria_label.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StoppingCriteria_label.Location = new System.Drawing.Point(500, 40);
+            this.StoppingCriteria_label.Location = new System.Drawing.Point(596, 40);
             this.StoppingCriteria_label.Name = "StoppingCriteria_label";
             this.StoppingCriteria_label.Size = new System.Drawing.Size(220, 30);
             this.StoppingCriteria_label.TabIndex = 9;
@@ -131,7 +132,7 @@
             this.StoppingCriteria_textBox.Enabled = false;
             this.StoppingCriteria_textBox.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StoppingCriteria_textBox.ForeColor = System.Drawing.Color.Gray;
-            this.StoppingCriteria_textBox.Location = new System.Drawing.Point(740, 40);
+            this.StoppingCriteria_textBox.Location = new System.Drawing.Point(836, 40);
             this.StoppingCriteria_textBox.Name = "StoppingCriteria_textBox";
             this.StoppingCriteria_textBox.Size = new System.Drawing.Size(220, 31);
             this.StoppingCriteria_textBox.TabIndex = 8;
@@ -141,7 +142,7 @@
             this.importFile_button.BackColor = System.Drawing.Color.DarkGray;
             this.importFile_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.importFile_button.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importFile_button.Location = new System.Drawing.Point(1100, 40);
+            this.importFile_button.Location = new System.Drawing.Point(1312, 40);
             this.importFile_button.Name = "importFile_button";
             this.importFile_button.Size = new System.Drawing.Size(200, 40);
             this.importFile_button.TabIndex = 10;
@@ -154,7 +155,7 @@
             this.continue_button.BackColor = System.Drawing.Color.DarkGray;
             this.continue_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.continue_button.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.continue_button.Location = new System.Drawing.Point(1100, 105);
+            this.continue_button.Location = new System.Drawing.Point(1312, 110);
             this.continue_button.Name = "continue_button";
             this.continue_button.Size = new System.Drawing.Size(200, 40);
             this.continue_button.TabIndex = 11;
@@ -185,6 +186,7 @@
             this.Interarrival_dataGridView.RowTemplate.Height = 24;
             this.Interarrival_dataGridView.Size = new System.Drawing.Size(398, 220);
             this.Interarrival_dataGridView.TabIndex = 13;
+            this.Interarrival_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Interarrival_dataGridView_CellContentClick);
             // 
             // server2_dataGridView
             // 
@@ -247,7 +249,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.ClientSize = new System.Drawing.Size(1600, 900);
+            this.ClientSize = new System.Drawing.Size(1794, 811);
             this.Controls.Add(this.Server1TimeDistribution_label);
             this.Controls.Add(this.Server2TimeDistribution_label);
             this.Controls.Add(this.InterarrivalDistribution_label);
@@ -269,6 +271,7 @@
             this.Name = "ExtractAndShowDataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Extract & Show Data";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtractAndShowDataForm_FormClosing);
             this.Load += new System.EventHandler(this.ExtractAndShowDataForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Interarrival_dataGridView)).EndInit();

@@ -23,5 +23,12 @@ namespace MultiQueueModels
         public int StartTime { get; set; }
         public int EndTime { get; set; }
         public int TimeInQueue { get; set; }
+        public SimulationCase(int customerNumber,int interArrival,int arrivaltime,int randomInterArrival)
+        {
+            this.CustomerNumber = customerNumber;
+            this.InterArrival = interArrival;
+            this.ArrivalTime = arrivaltime;
+            this.RandomInterArrival= randomInterArrival;
+        }
     }
 }
