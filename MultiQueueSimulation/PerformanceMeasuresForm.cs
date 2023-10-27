@@ -16,14 +16,26 @@ namespace MultiQueueSimulation
 
 
 
-        SimulationSystem oursystem = new SimulationSystem();
+        SimulationSystem oursystem = CalculationsForm.oursystem;
+
         public PerformanceMeasuresForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(PerformanceMeasuresForm_FormClosing);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < oursystem.NumberOfServers; i++)
             {
-                generatePanel(1, 2, 3, i + 1);
+                decimal average = oursystem.Servers[i].AverageServiceTime;
+                average = Math.Round(average, 3);
+
+                decimal prob = oursystem.Servers[i].IdleProbability;
+                prob = Math.Round(prob, 3);
+
+                decimal util = oursystem.Servers[i].Utilization;
+                util = Math.Round(util, 3);
+
+                int id = oursystem.Servers[i].ID;
+
+                generatePanel(average, prob, util, id);
             }
             
 
@@ -44,7 +56,7 @@ namespace MultiQueueSimulation
         private int x = 0;
         private int y = 0;
 
-        private void generatePanel(int avgService, int ProbIdle, int util, int ID)
+        private void generatePanel(decimal avgService, decimal ProbIdle, decimal util, int ID)
         {
             Label header = new Label();
             header.Text = $"Performance Measure of Server {ID}";

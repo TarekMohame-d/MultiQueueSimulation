@@ -13,6 +13,8 @@ namespace MultiQueueSimulation
 {
     public partial class Graphs : Form
     {
+        private int paddingStep = 0;
+
         public Graphs()
         {
             InitializeComponent();
@@ -28,10 +30,9 @@ namespace MultiQueueSimulation
 
         private void Graphs_Load(object sender, EventArgs e)
         {
+            
 
         }
-
-        private int y = 0;
 
         private void GenerateChart(int ID)
         {
@@ -40,7 +41,7 @@ namespace MultiQueueSimulation
             header.AutoSize = true;
             header.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             header.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            header.Location = new System.Drawing.Point(63, 150 + (y * 400));
+            header.Location = new System.Drawing.Point(63, 150 + (paddingStep * 400));
             header.Name = "label2";
             header.Size = new System.Drawing.Size(100, 42);
             header.TabIndex = 16;
@@ -53,18 +54,23 @@ namespace MultiQueueSimulation
             chart.Dock = DockStyle.None;
             int width = 0;
 
+
+
             // Create a ChartArea.
             ChartArea chartArea = new ChartArea("MyChartArea");
-            chartArea.AxisY.IsReversed = true;
-            chartArea.AxisX.IsReversed = true;
             
             chartArea.AxisY.Minimum = 0;
-            chartArea.AxisY.Maximum = 1;
+            chartArea.AxisY.Maximum = 20;
             chartArea.AxisX.Minimum = 0;
-            chartArea.AxisX.Maximum = width = 20;
+            chartArea.AxisX.Maximum = width = 1;
+
+            chartArea.AxisY.IsReversed = true;
+
             chartArea.Name = "ChartArea1";
-            chart.Location = new System.Drawing.Point(63, 200 + (y * 400));
-            y++;
+            chart.Location = new System.Drawing.Point(63, 200 + (paddingStep * 400));
+
+            paddingStep++;
+
             chart.Name = "chart1";
             chart.Size = new System.Drawing.Size(500, 500);
             chart.TabIndex = 1;
@@ -74,19 +80,15 @@ namespace MultiQueueSimulation
 
             // Create a Series for the bar graph.
             series.ChartArea = "ChartArea1";
-            series.Legend = "Legend1";
             series.Name = "Series1";
             series.ChartType = SeriesChartType.Bar;
 
             series.Points.AddXY(1, 4);
-            series.Points.AddXY(1, 9);
-            series.Points.AddXY(1, 5);
-            series.Points.AddXY(1, 6);
-            series.Points.AddXY(1, 7);
-            series.Points.AddXY(1, 8);
 
             chart.Series.Add(series);
+
             // Add the chart to the form.
+
             this.Controls.Add(chart);
         }
 

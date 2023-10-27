@@ -43,7 +43,9 @@ namespace MultiQueueSimulation
             int totaltime = 0;
 
             var customComparer = new MyClassAgeComparer();
+
             List<eventstruct> eventlist = new List<eventstruct>();
+
             int simulationclock;
             List<Server> servers = new List<Server>();
             for (int i = 0; i < ExtraxtData.rawData.numberOfServers; i++)
@@ -61,7 +63,7 @@ namespace MultiQueueSimulation
                 }
                 Tuple<int, int> t = c.GetTime(listforinterarrival);
                 int interarrivaltime = t.Item2;
-                
+
                 int timeofarrive = interarrivaltime + time;
                 time = timeofarrive;
                 Customers.Add(new SimulationCase(i, interarrivaltime, timeofarrive, t.Item1));
@@ -100,7 +102,7 @@ namespace MultiQueueSimulation
                             servers[i].TotalWorkingTime += servicetime;
                             servers[i].numofcustomers++;
                             eventlist.Add(new eventstruct(1, ev.customernumber, ev.time + servicetime, servers[i]));
-                            eventlist = eventlist.OrderBy(x => x.time).ThenBy(x => x.servernumber.ID).ToList(); 
+                            eventlist = eventlist.OrderBy(x => x.time).ThenBy(x => x.servernumber.ID).ToList();
                             break;
                         }
                     }
@@ -151,7 +153,7 @@ namespace MultiQueueSimulation
             p.WaitingProbability = probabilityofwaiting;
             p.AverageWaitingTime = averagewaitinginqueue;
             p.MaxQueueLength = maxnumberinqueue;
-            
+
             oursystem.InterarrivalDistribution = listforinterarrival;
             oursystem.StoppingNumber = ExtraxtData.rawData.stoppingNumber;
             if (int.Parse(ExtraxtData.rawData.stoppingCriteria) == 1)
@@ -177,7 +179,7 @@ namespace MultiQueueSimulation
                     servers[i].AverageServiceTime = 0;
 
             }
-            
+
             oursystem.Servers = servers;
             oursystem.SimulationTable = Customers;
             oursystem.PerformanceMeasures = p;
@@ -185,12 +187,13 @@ namespace MultiQueueSimulation
             //MessageBox.Show(testingresult);
             //MessageBox.Show(numberofcustomerswhowaitinqueue.ToString());
         }
+
         public void NoOfCustomersandleastutilization()
         {
             CalculationsHelper c = new CalculationsHelper();
             List<TimeDistribution> listforinterarrival = c.timeDistributionsforinterarrivals();
             List<List<TimeDistribution>> listforservers = new List<List<TimeDistribution>>();
-            
+
 
             for (int i = 0; i < ExtraxtData.rawData.numberOfServers; i++)
             {
@@ -309,7 +312,7 @@ namespace MultiQueueSimulation
             p.WaitingProbability = probabilityofwaiting;
             p.AverageWaitingTime = averagewaitinginqueue;
             p.MaxQueueLength = maxnumberinqueue;
-            
+
             oursystem.InterarrivalDistribution = listforinterarrival;
             oursystem.StoppingNumber = ExtraxtData.rawData.stoppingNumber;
             if (int.Parse(ExtraxtData.rawData.stoppingCriteria) == 1)
@@ -342,6 +345,7 @@ namespace MultiQueueSimulation
             //MessageBox.Show(testingresult);
             //MessageBox.Show(numberofcustomerswhowaitinqueue.ToString());
         }
+
 
         public void makeColumnsOfTable()
         {
@@ -432,11 +436,11 @@ namespace MultiQueueSimulation
 
             if (int.Parse(ExtraxtData.rawData.stoppingCriteria) == 1 && (ExtraxtData.rawData.selectionMethod.Equals("HighestPriority") || ExtraxtData.rawData.selectionMethod.Equals("Random")))
             {
-                NoOfcustomersandpriority();
+                //NoOfcustomersandpriority();
             }
             else if (int.Parse(ExtraxtData.rawData.stoppingCriteria) == 1 && ExtraxtData.rawData.selectionMethod.Equals("LeastUtilization"))
             {
-                NoOfCustomersandleastutilization();
+                //NoOfCustomersandleastutilization();
             }
 
             makeColumnsOfTable();
